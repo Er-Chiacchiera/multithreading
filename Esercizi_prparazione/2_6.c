@@ -24,13 +24,15 @@
 
 #define N_THREAD 4
 
+#define abort(msg); do{printf("%s\n",msg);exit(0)}while(1);
+
 char stringa[N_THREAD];
-pthread_spinlock_t th_lock;
+pthread_spinlock_t th_lock;     //creo un lock
 int turn;
 
 void *thread_Prod_Func(void *par){
     int id =*((int*)par);
-    while(turn!=id);
+    while(turn!=id);        //aspetto che sia il mio turno
     pthread_spin_lock(&th_lock);
     stringa[id]=id;
     (turn++)%4;
@@ -74,10 +76,8 @@ int main(int argc, char const *argv[]){
     /*iniziaizzo l'array di thread produttori*/
     for(int i=0;i<N_THREAD;i++){
         res= pthread_create(&trhead_prod[i], NULL, thread_Prod_Func, &id[i]);
-        if(res!=0){
-            printf("thread non creato\n");
-            exit(0);
-        }
+        if(res!=0)
+            abort("error: thread produttore non creato");
 
     }
 
@@ -89,17 +89,15 @@ int main(int argc, char const *argv[]){
     /*iniziaizzo l'array di thread produttori*/
     for(int i=0;i<N_THREAD;i++){
         res= pthread_create(&trhead_cons[i],NULL,thread_Cons_Func,&id[i]);
-        if(res!=0){
-            printf("thread non crato\n");
-            exit(0);
-        }
+        if(res!=0)
+            abort("error: thread consumatore non creato");
     }
 
     for(int i=0;i<N_THREAD;i++)
         pthread_join(trhead_cons[i],NULL);
 
 
-
-
+    free(trhead_cons);
+    free(trhead_prod);
 
 }

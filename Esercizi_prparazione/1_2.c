@@ -14,17 +14,21 @@
 
 int main(int argc, char const *argv[])
 {
+
+	/*Dichiarazioni variabili*/
 	char *heap;
 	int lung;
-	heap=(char*) malloc(sizeof(char) * LUNG_HEAP);
+
+	heap=(char*) malloc(sizeof(char) * LUNG_HEAP);	//alloco lo spazio
 	lung = 	strlen(argv[1]);
+
+	/*copio la stringa nel buffer*/
 	for (int i = 0; i < lung; i++)
-	{
 		heap[i]=argv[1][i];
-	}
 
 	printf("nell'heap ho messo la stringa: %s, ora procedo per invertirla\n",heap );
 
+	/*inverto la stringa senza ulteriori buffer*/
 	for (int i = 0; i < (lung/2); i++)
 	{
 		int a;
@@ -34,4 +38,5 @@ int main(int argc, char const *argv[])
 	}
 
 	printf("la stringa invertita e': %s\n",heap);
+	free(heap);			//libero la memoria
 }

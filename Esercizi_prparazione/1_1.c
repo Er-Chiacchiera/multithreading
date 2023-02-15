@@ -14,9 +14,10 @@
 
 int main(int argc, char const *argv[])
 {
-	
+	/*dichiario le variabili*/
 	char *heap;
 	int lung;
+
   	heap=(char*) malloc(sizeof(char) * LUNG_HEAP );			//alloco la memoria sull'heap
   	printf("inserisci la stringa da allocare neel'heap: ");
   	scanf("%s",heap);										//leggo il valore da tastiera
@@ -26,13 +27,9 @@ int main(int argc, char const *argv[])
   	printf("lunghezza array statico %d\n",lung);
   	char array[lung];
   	for (int i = 0; i < lung; ++i)							//trasferisco la stringa sullo stack
-  	{
   		array[i]=heap[i];
-  	}
+
   	printf("ho messo la stringa sullo stack: %s\n",heap);
   	free(heap);												//libero la memoria sull'heap
   	printf("ho lioberato la memoria dall'heap\n");
-
-
-
 }

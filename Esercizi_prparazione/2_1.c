@@ -13,26 +13,30 @@
 
 #define LUNG_STRINGA (20)
 
-int main(){
+int main()
+{
+	/*dichiaro le variabili*/
 	int res,status;
-	char stringa[LUNG_STRINGA];
+	char stringa[LUNG_STRINGA];		//variabile condivisa con il processo figlio(guadre teoria)
+
+	/*processo del padre*/
 	printf("Sono il padre, inserisci una parola: ");
 	scanf("%s",stringa);
 	printf("Sono il padre devo creare mio figlio\n");
-	res=fork();
-	if(res==-1)
+	res=fork();			//invoco la fork (creo un processo figlio)
+	if(res==-1)			//errore sulla fork
 		printf("Ho fallito la creazione di mio figlio\n");
 	else 
-		if(res==0){
+		if(res==0){		//sono il processo figlio
 			sleep(3);
 			printf("Sono il figlio, mando in stampa la parola presa da mio padre: %s\n",stringa);
 			exit(1);
 		}
-		else{
+		else{			//sono il processo padre
 			printf("Sono il padre, attendo che mio figlio finisca\n");
-			wait(&status);
+			wait(&status);		//attendo fino a che mio figlio non finisca
 			printf("Sono il padre, mio figlio ha invocato %d\n",WEXITSTATUS(status));
-			printf("Sono il padre,e' ora di morire\n");
+			printf("Sono il padre, e' ora di morire\n");
 		}
 
 	exit(0);
